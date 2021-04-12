@@ -16,7 +16,7 @@
   "scripts": {
     "init-server": "node server.js",
     "start": "cd app npm start",
-    "build": "cd app npm run build",
+    "build": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
