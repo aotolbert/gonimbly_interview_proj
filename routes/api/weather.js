@@ -1,20 +1,22 @@
 var express = require('express');
 var router = express.Router();
-const trucksController = require("../../controller/truckController");
+const weatherController = require("../../controller/weatherController");
 
-// Matches with "/api/trucks"
-router.route("/")
-  .get(trucksController.findAll)
-  .post(trucksController.create);
-// Matches with "/api/trucks/map"
-router.route("/map")
-  .get(trucksController.findForMap)
+// Matches with "/api/weather/location/search"
+router.route("/location/search/latlong")
+    .get(weatherController.queryMetaWeatherForWOEUsingLatLong);
+  // .get(trucksController.findAll)
+  // .post(trucksController.create);
 
-// Matches with "/api/trucks/:id"
-router
-  .route("/:id")
-  .get(trucksController.findOne)
-  .put(trucksController.update)
-  .delete(trucksController.destroy);
+// Matches with "/api/weather/location/search/latlong"
+router.route("/location/search/latlong")
+
+  // .get(trucksController.findForMap)
+
+// Matches with "/api/weather/:id"
+router.route("/:id")
+  // .get(trucksController.findOne)
+  // .put(trucksController.update)
+  // .delete(trucksController.destroy);
 
 module.exports = router;

@@ -1,10 +1,8 @@
 const router = require('express').Router();
-const truckRoutes = require('./weather');
-const yelpRoutes = require('./pwnd');
-const favoriteRoutes = require('./calculator');
-const userRoutes = require('./users');
-router.use('/trucks', truckRoutes);
-router.use('/yelpreviews', yelpRoutes);
-router.use('/favorites', favoriteRoutes);
-router.use('/users', userRoutes);
+const weatherRoutes = require('./weather');
+const pwndRoutes = require('./pwnd');
+const calculatorRoutes = require('./calculator');
+router.use('/weather', weatherRoutes);
+router.use('/pwnd', pwndRoutes);
+router.use('/calculator', calculatorRoutes);
 module.exports = router;
