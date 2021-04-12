@@ -56,10 +56,10 @@ class App extends Component {
     if(this.state.latitude !== 0.0000 && this.state.longitude !== 0.0000) {
       console.log('located a lat and a long');
       
-      let queryString = 'san%20fra';
-      fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=${queryString}`)
+      // let queryString = 'san%20fra';
+      // fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=${queryString}`)
 
-      // fetch(`https://www.metaweather.com/api/location/search/?lattlong=${this.state.latitude},${this.state.longitude}`)
+      fetch(`https://www.metaweather.com/api/location/search/?lattlong=${this.state.latitude},${this.state.longitude}`)
       .then(res => res.json())
       .then((data) => {
         console.log(data);
