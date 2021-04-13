@@ -14,8 +14,11 @@ router.route("/location/search/query")
 
   // .get(trucksController.findForMap)
 
+router.route("/location/data")
+  .get(weatherController.queryWeatherDataUsingWOEId);
+
 // Matches with "/api/weather/:id"
-router.route("/:id");
+// router.route("/:id");
   // .get(trucksController.findOne)
   // .put(trucksController.update)
   // .delete(trucksController.destroy);
