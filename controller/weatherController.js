@@ -7,7 +7,7 @@ module.exports = {
             console.log("Longitude is :", req.query.long);
         
         
-            request('https://www.metaweather.com/api/location/search/?lattlong=35.163436,-80.8481284', { json: true }, (err, res, body) => {
+            request(`https://www.metaweather.com/api/location/search/?lattlong=${req.query.lat},${req.query.long}`, { json: true }, (err, res, body) => {
                 if (err) { 
                     return console.log(err); 
                 } else {
