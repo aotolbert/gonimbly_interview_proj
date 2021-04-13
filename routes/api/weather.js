@@ -4,12 +4,12 @@ const weatherController = require("../../controller/weatherController");
 
 // Matches with "/api/weather/location/search"
 router.route("/location/search/latlong")
-    .get(weatherController.queryMetaWeatherForWOEUsingLatLong);
+    .get(weatherController.queryMetaWeatherForWOEUsingLatLong)
   // .get(trucksController.findAll)
   // .post(trucksController.create);
 
 // Matches with "/api/weather/location/search/latlong"
-router.route("/location/search/latlong")
+// router.route("/location/search/lattlong")
 
   // .get(trucksController.findForMap)
 

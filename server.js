@@ -1,18 +1,37 @@
-var express = require('express');
-
-var cors = require('cors');
+let express = require('express');
+const path = require('path');
+const cors = require('cors');
 const routes = require("./routes");
-var app = express();
+let app = express();
 const PORT = process.env.PORT || 3001;
 // const db = require("./models");
 
+const whitelist = ['https://localhost:3000', 'http://localhost:3001', 'https://gonimbly-proj.herokuapp.com/'];
 
-
-app.use(cors());
-
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable")
+      callback(null, true)
+    } else {
+      console.log("Origin rejected")
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
 }
+app.use(cors(corsOptions));
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+  }
+
+
 
 // Add routes, both API and view
 app.use(routes);

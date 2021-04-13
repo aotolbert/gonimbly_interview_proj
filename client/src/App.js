@@ -12,21 +12,16 @@ import './App.css';
 class App extends Component {
 
   state = {
-    links: [],
-    currentScore: 0,
-    highScore: 0,
-    guessed: ["Item"],
-    badGuess: false,
-    latitude: 0.0000,
-    longitude: 0.0000,
-    metaWeatherWOE: 0
+      latitude: 0.0000,
+      longitude: 0.0000,
+      metaWeatherWOE: 0
   };
 
   
 
 
   componentDidMount() {
-    this.loadImages();
+    // this.loadImages();
     if ("geolocation" in navigator) {
       console.log("Available");
 
@@ -56,9 +51,16 @@ class App extends Component {
     if(this.state.latitude !== 0.0000 && this.state.longitude !== 0.0000) {
       console.log('located a lat and a long');
       
+
       // let queryString = 'san%20fra';
       // fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=${queryString}`)
-      API.getWOEIdWithLatLong(this.state.latitude, this.state.longitude);
+      API.getWOEIdWithLatLong(this.state.latitude, this.state.longitude)
+      .then(res  => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
       // fetch(`https://www.metaweather.com/api/location/search/?lattlong=${this.state.latitude},${this.state.longitude}`)
       // .then(res => res.json())
       // .then((data) => {

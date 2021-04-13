@@ -4,7 +4,11 @@ import axios from "axios";
 export default {
   // Gets all trucks
   getWOEIdWithLatLong: function (lat, long) {
-    return axios.get(`/api/weather/location/search/latlong/?lat=${lat}&long=${long}`);
+    let promise = axios.get(`/api/weather/location/search/latlong/?lat=${lat}&long=${long}`);
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+    // return it
+    return dataPromise
   },
   // Gets the Truck with the given id
   getTruck: function (id) {
