@@ -9,7 +9,7 @@ module.exports = {
         
             request(`https://www.metaweather.com/api/location/search/?lattlong=${req.query.lat},${req.query.long}`, { json: true }, (err, res, body) => {
                 if (err) { 
-                    return console.log(err); 
+                    console.log(err);
                 } else {
                     let weatherResponseArray = [];
 
@@ -20,7 +20,7 @@ module.exports = {
                         weatherResponseArray.pop(resObj);
                     }
                     
-                    return weatherResponseArray;
+                    // return weatherResponseArray;
                     
                 }
               });
@@ -34,7 +34,8 @@ module.exports = {
         
             request(`https://www.metaweather.com/api/location/search/?query=${req.query.search}`, { json: true }, (err, res, body) => {
                 if (err) { 
-                    return console.log(err); 
+                    console.log(err);
+                    return err;
                 } else {
 
                     let weatherResponseArray = [];
@@ -55,24 +56,36 @@ module.exports = {
           },
 
           queryWeatherDataUsingWOEId: (req, res) => {
-            console.log("Searching for :", req.query.woeid);
+            // console.log(req);
+            console.log("Backend is Searching for :", req.query.woeid);
         
         
-            request(`https://www.metaweather.com/api/location/${req.query.woeid}`, { json: true }, (err, res, body) => {
+            request(`https://www.metaweather.com/api/location/${req.query.woeid.toString()}/`, { json: true }, (err, res, body) => {
                 if (err) { 
-                    return console.log(err); 
+                    console.log(err);
+                    return err;
                 } else {
+                    // console.log(res);
+                    console.log(body);
 
-                    let weatherResponseArray = [];
+                    if(body.consolidated_weather) {
+                       let weatherReports = [];
+                        for(let i = 0; i < body.consolidated_weather.length; i++) {
+                            let resObj = new WeatherLocationDataResponse(body.consolidated_weather[i]);
 
-                    for(let i = 0; i < body.length; i++) {
-                        let resObj = new WeatherLocationDataResponse(body[i]);
-                        
-                        console.log(resObj);
-                        weatherResponseArray.pop(resObj);
+                            console.log(resObj);
+                            weatherReports.pop(resObj);
+                        }
+                     
                     }
+
+                    if(body.parent) {
+                        console.log(body.parent);
+                    }
+
+
+   
                     
-                    return weatherResponseArray;
                     
                 }
               });

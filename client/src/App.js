@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import { Col, Row, Container, Jumbotron , Header} from "./components/Grid";
 // import Image from "./Images";
 import Weather from "./components/Weather";
-import Pwnd from "./components/Pwnd";
-import Calculator from "./components/Calculator";
+// import Pwnd from "./components/Pwnd";
+// import Calculator from "./components/Calculator";
 import API from "./utils/API.js";
-import ImgLinks from "./Images/imglinks";
 import './App.css';
 
 class App extends Component {
@@ -107,9 +106,9 @@ class App extends Component {
   };
 
   getWeatherDataForSelectedWOEId = () => {
-    let WOEid = this.state.woeid;
-    console.log('Searching for ' + WOEid);
-    API.getWeatherDataWithWOEId(WOEid)
+    let woeid = this.state.woeid;
+    console.log('Searching for ' + woeid);
+    API.getWeatherDataWithWOEId(woeid)
     .then(res  => {
       console.log(res);
       // let data = JSON.parse(res.body);
