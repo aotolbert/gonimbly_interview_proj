@@ -6,7 +6,7 @@ let app = express();
 const PORT = process.env.PORT || 3001;
 // const db = require("./models");
 
-const whitelist = ['https://localhost:3000', 'http://localhost:3001', 'https://gonimbly-proj.herokuapp.com/'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'https://gonimbly-proj.herokuapp.com/'];
 
 const corsOptions = {
   origin: function (origin, callback) {

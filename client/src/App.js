@@ -14,7 +14,8 @@ class App extends Component {
   state = {
       latitude: 0.0000,
       longitude: 0.0000,
-      metaWeatherWOE: 0
+      metaWeatherWOE: 0,
+      searchTerm: "Seattl"
   };
 
   
@@ -27,7 +28,7 @@ class App extends Component {
 
       console.log(navigator.geolocation);
 
-      navigator.geolocation.getCurrentPosition(this.queryMetaWeatherWOEId);
+      navigator.geolocation.getCurrentPosition(this.queryMetaWeatherWOEIdWithPosition);
 
 
 
@@ -36,7 +37,7 @@ class App extends Component {
     }
   }
 
-  queryMetaWeatherWOEId = (position) => {
+  queryMetaWeatherWOEIdWithPosition = (position) => {
     console.log("Latitude is :", position.coords.latitude);
     console.log("Longitude is :", position.coords.longitude);
     let latVal = position.coords.latitude;
@@ -61,8 +62,13 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
-      // fetch(`https://www.metaweather.com/api/location/search/?lattlong=${this.state.latitude},${this.state.longitude}`)
-      // .then(res => res.json())
+      // fetch(`/api/weather/location/search/latlong/?lat=${this.state.latitude}&long=${this.state.longitude}`)
+      // .then(res => {
+      //   console.log(res);
+      //   // return res.json();
+      // }).catch(err => {
+      //   console.log(err);
+      // })
       // .then((data) => {
       //   console.log(data);
 
@@ -82,50 +88,20 @@ class App extends Component {
     }
   };
 
-  shuffleArray = (ImgLinks) => {
-    for (let i = 0; i < ImgLinks.length; i++) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = ImgLinks[i];
-      ImgLinks[i] = ImgLinks[j];
-      ImgLinks[j] = temp;
-    }
-    this.setState({ links: ImgLinks });
-  };
+  handlePhoneClick = () => {
+    let phone = this.state.currentTruck.phone
+    window.open(`tel: ${phone}`)
+}
+  onClickSearchWeather = () => {
+    let searchTerm = this.state.searchTerm;
+    API.getWOEIdWithQueryString(searchTerm)
+    .then(res  => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
-  loadImages = () => {
-   this.shuffleArray(ImgLinks);
-   console.log("Welcome")
-  };
-
-  badGuess = () => {
-    if (this.state.currentScore > this.state.highScore) {
-      this.setState({ highScore: this.state.currentScore })
-    }
-    this.setState({ guessed: ["Item"] });
-    this.setState({ currentScore: 0 })
-    // this.alertLose();
-  };
-
-  // alertLose = () => {
-  //   alert("Whoops! You've already selected him, try again!!")
-  // }
-
-  handleImageClick = event => {
-    console.log(event.target.id)
-    let userGuess = event.target.id;
-    console.log(`${userGuess} was clicked`)
-    console.log(this.state.guessed)
-    for (let l=-1; l<this.state.guessed.length; l++) {
-      if (userGuess === this.state.guessed[l]) {
-        this.badGuess();
-        return;
-      } else {
-        this.setState({currentScore: this.state.currentScore + 1})
-        var joined = this.state.guessed.concat(userGuess);
-        this.setState({ guessed: joined })
-        this.loadImages();
-      }
-    }
   };
 
 
@@ -143,17 +119,17 @@ class App extends Component {
         </Jumbotron>
         <Row width="100" id="background">
 
-          <Col size="4">
-            <Weather id="weatherApp"/>
+          <Col size="8">
+            <Weather id="weatherApp" onClickSearchWeather={this.onClickSearchWeather}/>
           </Col>
 
-          <Col size="4">
+          {/* <Col size="4">
             <Pwnd id="pwndApp"/>
           </Col>
 
           <Col size="4">
             <Calculator id = "calcApp"/>
-          </Col>
+          </Col> */}
 
         </Row>
 
