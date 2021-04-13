@@ -15,7 +15,8 @@ class App extends Component {
       latitude: 0.0000,
       longitude: 0.0000,
       metaWeatherWOE: 0,
-      searchTerm: "Seattl"
+      searchTerm: "Seattl",
+      woeid: 2487956
   };
 
   
@@ -94,6 +95,7 @@ class App extends Component {
 }
   onClickSearchWeather = () => {
     let searchTerm = this.state.searchTerm;
+    console.log('Searching for ' + searchTerm);
     API.getWOEIdWithQueryString(searchTerm)
     .then(res  => {
       console.log(res);
@@ -101,6 +103,36 @@ class App extends Component {
     .catch(err => {
       console.log(err);
     });
+
+  };
+
+  getWeatherDataForSelectedWOEId = () => {
+    let WOEid = this.state.woeid;
+    console.log('Searching for ' + WOEid);
+    API.getWeatherDataWithWOEId(WOEid)
+    .then(res  => {
+      console.log(res);
+      // let data = JSON.parse(res.body);
+      // console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  };
+  
+  
+
+  updateSearchTerm = (e) => {
+    console.log(e);
+    // console.log('Searching for ' + searchTerm);
+    // API.getWOEIdWithQueryString(searchTerm)
+    // .then(res  => {
+    //   console.log(res);
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
 
   };
 
@@ -120,7 +152,10 @@ class App extends Component {
         <Row width="100" id="background">
 
           <Col size="8">
-            <Weather id="weatherApp" onClickSearchWeather={this.onClickSearchWeather}/>
+            <Weather id="weatherApp" 
+            setSearchTerm={() => this.updateSearchTerm}
+            onClickSearch={() => this.onClickSearchWeather}
+            searchForDataUsingWOE={() => this.getWeatherDataForSelectedWOEId}/>
           </Col>
 
           {/* <Col size="4">
